@@ -2,22 +2,27 @@
  * Created by wangyin on 2017/6/8.
  */
 
-var circle = new AMap.Circle({
-//            center: new AMap.LngLat("116.403322", "39.920255"),// Բ��λ��
-    radius: 1000, //�뾶
-    strokeColor: "#F33", //����ɫ
-    strokeOpacity: 1, //��͸����
-    strokeWeight: 3, //�ߴ�ϸ��
-    fillColor: "#ee2200", //�����ɫ
-    fillOpacity: 0.35//���͸����
+
+
+const map = new AMap.Map('container', {
+    zoom: 13,
+    scrollWheel: false,
+    resizeEnable: true
 });
-//        circle.setMap(map);
+
+
+const circle = new AMap.Circle({
+    // center: new AMap.LngLat("120.153576", "30.287478"),// 圆心位置
+    radius: 5000, //半径
+    strokeColor: "#F33", //线颜色
+    strokeOpacity: 0.8, //线透明度
+    strokeWeight: 2, //线粗细度
+    fillColor: "#ee2200", //填充颜色
+    fillOpacity: 0.3//填充透明度
+});
+circle.setMap(map);
 
 AMapUI.loadUI(['misc/PositionPicker'], function (PositionPicker) {
-    var map = new AMap.Map('container', {
-        zoom: 16,
-        scrollWheel: false
-    });
     var positionPicker = new PositionPicker({
         mode: 'dragMap',
         map: map
@@ -29,7 +34,8 @@ AMapUI.loadUI(['misc/PositionPicker'], function (PositionPicker) {
         document.getElementById('nearestJunction').innerHTML = positionResult.nearestJunction;
         document.getElementById('nearestRoad').innerHTML = positionResult.nearestRoad;
         document.getElementById('nearestPOI').innerHTML = positionResult.nearestPOI;
-        // circle.setCenter(new AMap.LngLat(positionResult.position));
+        circle.setCenter(positionResult.position);
+        circle.show();
         // circle.setMap(map);
     });
     positionPicker.on('fail', function (positionResult) {
@@ -57,8 +63,45 @@ AMapUI.loadUI(['misc/PositionPicker'], function (PositionPicker) {
     positionPicker.start();
     map.panBy(0, 1);
 
-
+    // 添加控件
     map.addControl(new AMap.ToolBar({
         liteStyle: true
-    }))
+    }));
 });
+
+
+//设置城市
+AMap.event.addDomListener(document.getElementById('goCity'), 'click', function () {
+    var cityName = document.getElementById('cityName').value;
+    if (!cityName) {
+        cityName = '杭州市';
+    }
+    map.setCity(cityName);
+});
+
+AMap.event.addDomListener(document.getElementById('zoom'), 'click', function () {
+    var zoomLevel = document.getElementById('zoomLevel').value;
+    // 在PC上，默认为[3,18]，取值范围[3-18]
+    if (!zoomLevel || zoomLevel < 3 || zoomLevel > 18) {
+        zoomLevel = 10;
+    }
+    map.setZoom(zoomLevel);
+});
+
+// 可以限制地图显示范围，   拉出去后，会被拽回来
+
+// 有  城市下拉列表  的DEMO
+
+// 地图操作时事件触发
+map.on('movestart', function() {
+    circle.hide();
+});
+
+map.on('moveend', getCity);
+function getCity() {
+    map.getCity(function (data) {
+        if (data['province'] && typeof data['province'] === 'string') {
+            document.getElementById('pca').innerHTML = (data['province'] + '&nbsp;' + data['city'] + '&nbsp;' + data['district']);
+        }
+    });
+}

@@ -8,16 +8,24 @@ body {
     font-size: 13px;
 }
 
+input[type="text"] {
+    height: 25px;
+    outline: none;
+    border: 0;
+    border: 1px solid #CCCCCC;
+    padding: 0 4px;
+}
+
 .map {
     height: 100%;
-    width: 60%;
+    width: 80%;
     float: left;
 }
 
 #right {
     color: #444;
     background-color: #f8f8f8;
-    width: 40%;
+    width: 20%;
     float: left;
     height: 100%;
 }
@@ -40,6 +48,20 @@ button {
     background-color: #dadafa;
 }
 
+.button-group .button {
+    height: 28px;
+    line-height: 28px;
+    background-color: #0D9BF2;
+    color: #FFF;
+    border: 0;
+    outline: none;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 3px;
+    margin-bottom: 4px;
+    cursor: pointer;
+}
+
 .c {
     font-weight: 600;
     padding-left: 15px;
@@ -47,6 +69,7 @@ button {
 }
 
 #lnglat,
+#pca,
 #address,
 #nearestJunction,
 #nearestRoad,

@@ -15,12 +15,41 @@
 <body>
 <div id="container" class="map" tabindex="0"></div>
 <div id='right'>
+  <div class="button-group">
+    <div class='title'>快速定位</div>
+    <div>
+      <input id="cityName" class="inputtext" placeholder="请输入城市的名称" type="text"/>
+      <input id="goCity" class="button" value="到指定的城市" type="button"/>
+    </div>
+    <!--div>
+      <input id="cityName" class="inputtext" placeholder="请输入城市的名称" type="text"/>
+      <input id="goCity" class="button" value="到指定的城市" type="button"/>
+    </div-->
+  </div>
+
+  <div class="button-group">
+    <div class='title'>地图属性</div>
+    <div>
+      <input id="zoomLevel" class="inputtext" placeholder="输入缩放" type="text"/>
+      <input id="zoom" class="button" value="缩放" type="button"/>
+    </div>
+  </div>
+
+  <div class="button-group">
+    <div class='title'>覆盖范围属性</div>
+    <div>
+      <input id="radius" placeholder="输入覆盖半径" type="text"/>
+      <input id="change" class="button" value="改变" type="button"/>
+    </div>
+  </div>
+
   <div>
     <div class='title'>选择模式</div>
     <input type='radio' name='mode' value='dragMap' checked>拖拽地图模式</input>
     </br>
     <input type='radio' name='mode' value='dragMarker'>拖拽Marker模式</input>
   </div>
+
   <div>
     <button id='start'>开始选点</button>
     <button id='stop'>关闭选点</button>
@@ -29,6 +58,8 @@
     <div class='title'>选址结果</div>
     <div class='c'>经纬度:</div>
     <div id='lnglat'></div>
+    <div class='c'>行政区划:</div>
+    <div id='pca'></div>
     <div class='c'>地址:</div>
     <div id='address'></div>
     <div class='c'>最近的路口:</div>
