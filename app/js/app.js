@@ -9,7 +9,7 @@ const map = new AMap.Map('container', {
     scrollWheel: false,
     resizeEnable: true
 });
-
+document.getElementById('zoomLevel').value = map.getZoom();
 
 const circle = new AMap.Circle({
     // center: new AMap.LngLat("120.153576", "30.287478"),// 圆心位置
@@ -20,6 +20,7 @@ const circle = new AMap.Circle({
     fillColor: "#ee2200", //填充颜色
     fillOpacity: 0.3//填充透明度
 });
+document.getElementById('radius').value = circle.getRadius();
 circle.setMap(map);
 
 AMapUI.loadUI(['misc/PositionPicker'], function (PositionPicker) {
@@ -79,6 +80,7 @@ AMap.event.addDomListener(document.getElementById('goCity'), 'click', function (
     map.setCity(cityName);
 });
 
+// 设置地图
 AMap.event.addDomListener(document.getElementById('zoom'), 'click', function () {
     var zoomLevel = document.getElementById('zoomLevel').value;
     // 在PC上，默认为[3,18]，取值范围[3-18]
@@ -86,6 +88,16 @@ AMap.event.addDomListener(document.getElementById('zoom'), 'click', function () 
         zoomLevel = 10;
     }
     map.setZoom(zoomLevel);
+    document.getElementById('zoomLevel').value = map.getZoom();
+});
+
+AMap.event.addDomListener(document.getElementById('change'), 'click', function() {
+    var radius = document.getElementById('radius').value;
+    if (!radius || radius < 500 || radius > 10000) {
+        radius = 1000;
+    }
+    circle.setRadius(radius);
+    document.getElementById('radius').value = radius;
 });
 
 // 可以限制地图显示范围，   拉出去后，会被拽回来
